@@ -1,5 +1,5 @@
 
-const apiUrl="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false";
+const apiUrl= "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false";
 
 let data = [];
 
@@ -7,7 +7,7 @@ async function fetchDataWithAsyncAwait() {
     try {
         const response = await fetch(apiUrl);
         data = await response.json();
-        renderTable(data);
+        showData(data);
     } catch (e) {
         console.log(`getting error with API ${e}`)
     }
@@ -15,7 +15,9 @@ async function fetchDataWithAsyncAwait() {
 
 // Render table
 const table = document.getElementById('cryptoTable');
-function renderTable(data) {
+
+
+function showData(data) {
 
     table.innerHTML = '';
 
@@ -41,36 +43,32 @@ const search = document.getElementById("search");
 const sortByMktCap = document.getElementById('sort1');
 const sortByPercentage = document.getElementById('sort2');
 
-
-function addEventListner() {
-    sortByMktCap.addEventListener('click', ()=> {
-        const sortedByMktCap = data.sort((a, b) => b.market_cap - a.market_cap)
-        renderTable(sortedByMktCap)
+// function addEventListeners() {
+    // Event listener for sorting by market cap
+    sortByMktCap.addEventListener('click', () => {
+        console.log("click")
+        const sortedByMktCap = data.sort((a, b) => b.market_cap - a.market_cap);
+        showData(sortedByMktCap);
     });
 
-
-    sortByPercentage.addEventListener('click', ()=> {
-        const sortByPercentage = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h)
-        renderTable(sortByPercentage)
+    // Event listener for sorting by percentage change
+    sortByPercentage.addEventListener('click', () => {
+        console.log("click")
+        const sortedByPercentage = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+        showData(sortedByPercentage);
     });
 
-    search.addEventListener('keyup', () =>{
-        const searchItem = search.ariaValueMax.toLowerCase();
-        const filterdata = data.filter(item => {
+    // Event listener for search
+    search.addEventListener('keyup', () => {
+        console.log("click")
+        const searchItem = search.value.toLowerCase();
+        const filteredData = data.filter(item => {
             const itemName = item.name.toLowerCase();
             const itemSymbol = item.symbol.toLowerCase();
             return itemName.includes(searchItem) || itemSymbol.includes(searchItem);
-        })
-        renderTable(filterdata);
-
-    })
-
-}
-
-
-
-
-
-
+        });
+        showData(filteredData);
+    });
+// }
 
 fetchDataWithAsyncAwait();
