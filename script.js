@@ -32,7 +32,7 @@ function showData(data) {
             <td>${data[i].symbol}</td>
             <td>${"$" + data[i].current_price}</td>
             <td>${"$" +data[i].total_volume}</td>
-            <td class="${percentage}">${twenty24HrChange} + %</td>
+            <td class="${percentage}">${twenty24HrChange}%</td>
             <td>Mkt Cap: ${data[i].market_cap}</td>
         `;
         table.appendChild(tr);
